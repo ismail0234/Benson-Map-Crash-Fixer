@@ -142,13 +142,13 @@ bool CheckMapEnd()
 	return false;
 }
 
-void SetIntCvar(char[] scvar, int value)
+bool SetIntCvar(char[] scvar, int value)
 {
-
+	
 	ConVar cvar = FindConVar(scvar);
 	if (cvar == null) 
-		return;
+		return false;
 		
 	cvar.SetInt(value);
-
+	return true;
 }
