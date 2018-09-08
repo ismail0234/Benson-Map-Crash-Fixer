@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.1",
+    version     = "1.0.2",
     url         = "https://www.botbenson.com"
 };
 ConVar mapChangeDelay;
