@@ -1,6 +1,5 @@
 #include <sourcemod>
 #include <sdktools>
-#include <bbcolors>
 
 #pragma semicolon 1
 #pragma tabsize 0
