@@ -144,7 +144,11 @@ bool CheckMapEnd()
 
 void SetIntCvar(char[] scvar, int value)
 {
-	
-	SetConVarInt(FindConVar(scvar), value);
+
+	ConVar cvar = FindConVar(scvar);
+	if (cvar == null) 
+		return;
+		
+	cvar.SetInt(value);
 
 }
