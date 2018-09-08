@@ -81,6 +81,7 @@ public Action Timer_RetryPlayers( Handle timer , int _any )
 		if( !IsClientInGame( i ) || IsFakeClient( i ) || !IsClientConnected( i ) )
 			continue;
 
+		ReplyToCommand( i, "BOT Benson Automatic Map Change Success!");
 		ClientCommand( i , "retry" );
 
 	}
