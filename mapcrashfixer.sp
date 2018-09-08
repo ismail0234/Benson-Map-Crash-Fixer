@@ -11,7 +11,7 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.0.6",
+    version     = "1.0.0.7",
     url         = "https://www.botbenson.com"
 };
 
