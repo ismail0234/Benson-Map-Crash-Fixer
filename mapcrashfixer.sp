@@ -10,21 +10,16 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.0.7",
+    version     = "1.0.1",
     url         = "https://www.botbenson.com"
 };
-
-ConVar _maxRound , _nextmapVote , _winlimit;
-
-bool _retry = false;
+ConVar mapChangeDelay;
 public void OnPluginStart()
 {
 
-	_maxRound    = FindConVar("mp_maxrounds");
-	_winlimit    = FindConVar("mp_winlimit");
-	_nextmapVote = FindConVar("mp_endmatch_votenextmap");
+	mapChangeDelay = FindConVar("mp_match_restart_delay");
 
-	HookEvent("round_end", OnRoundEnd);
+	HookEventEx("cs_win_panel_match", Event_MapEnd);
 
 	RegAdminCmd( "sm_mapend" , Command_MapEnd , ADMFLAG_CHANGEMAP );
 	RegAdminCmd( "sm_changenextmap" , Command_ChangeNextMap , ADMFLAG_CHANGEMAP );
@@ -39,10 +34,7 @@ public void OnMapStart()
    	SetIntCvar("mp_endmatch_votenextleveltime" , 0);
    	SetIntCvar("mp_match_end_restart" , 0);
 
-	_retry = false;
-
 }
-
 
 public Action Command_ChangeNextMap( int client , int args )
 {
@@ -72,17 +64,11 @@ public Action Command_MapEnd( int client , int args )
 	return Plugin_Handled;
 }
 
-public void OnRoundEnd(Event event, const char[] name, bool dontBroadcast)
+public void Event_MapEnd(Event event, const char[] name, bool dontBroadcast)
 {
-	
-	if( !_retry && CheckMapEnd() )
-	{
 
-		CreateTimer( 14.9 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
-		_retry = true;
+	CreateTimer( float( mapChangeDelay.IntValue ) - 0.15 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
-	}
-	
 }
 
 public Action Timer_RetryPlayers( Handle timer , int _any )
@@ -100,45 +86,6 @@ public Action Timer_RetryPlayers( Handle timer , int _any )
 	}
 
 	return Plugin_Stop;
-}
-
-bool CheckMapEnd()
-{
-
-	if( _nextmapVote.IntValue != 0 )
-		return false;
-
-	int maxround = _maxRound.IntValue;
-	if(maxround > 0)
-	{
-
-		int CTScore  = GetTeamScore( 3 );
-		int TScore   = GetTeamScore( 2 );
-		int winscore = _winlimit.IntValue;
-
-		if( maxround > winscore )
-			winscore = ( maxround / 2 ) + 1;
-
-		if( CTScore >= winscore || TScore >= winscore )
-			return true;
-
-		maxround = maxround / 2;
-		int winTeamScore = maxround + 1;
-		if( CTScore >= winTeamScore || TScore >= winTeamScore )
-			return true;
-
-		if( CTScore == maxround && TScore == maxround) 
-			return true;
-
-		return false;
-	}
-		
-	int timeleft;
-	GetMapTimeLeft(timeleft);
-	if (timeleft <= 0) 
-		return true;
-	
-	return false;
 }
 
 bool SetIntCvar(char[] scvar, int value)
