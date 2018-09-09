@@ -67,7 +67,7 @@ public Action Command_MapEnd( int client , int args )
 public void Event_MapEnd(Event event, const char[] name, bool dontBroadcast)
 {
 
-	CreateTimer( float( mapChangeDelay.IntValue ) - 0.15 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( float( mapChangeDelay.IntValue ) , Timer_RetryPlayers , _ );
 
 }
 
@@ -81,8 +81,7 @@ public Action Timer_RetryPlayers( Handle timer , int _any )
 		if( !IsClientInGame( i ) || IsFakeClient( i ) || !IsClientConnected( i ) )
 			continue;
 
-		ReplyToCommand( i, "BOT Benson Automatic Map Change Success!");
-		ClientCommand( i , "retry" );
+		ReconnectClient( i );
 
 	}
 
