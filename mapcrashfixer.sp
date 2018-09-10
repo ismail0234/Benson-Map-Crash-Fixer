@@ -10,9 +10,10 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.3",
+    version     = "1.0.4",
     url         = "https://www.botbenson.com"
 };
+
 ConVar mapChangeDelay;
 public void OnPluginStart()
 {
@@ -23,6 +24,18 @@ public void OnPluginStart()
 
 	RegAdminCmd( "sm_mapend" , Command_MapEnd , ADMFLAG_CHANGEMAP );
 	RegAdminCmd( "sm_changenextmap" , Command_ChangeNextMap , ADMFLAG_CHANGEMAP );
+
+}
+
+public Action OnLogAction(Handle source, Identity ident,int client,int target, const char[] message)
+{
+    
+	if( StrContains( message , "changed map to" ) )
+	{
+
+		CreateTimer( 3.0 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+
+	}
 
 }
 
@@ -67,7 +80,7 @@ public Action Command_MapEnd( int client , int args )
 public void Event_MapEnd(Event event, const char[] name, bool dontBroadcast)
 {
 
-	CreateTimer( float( mapChangeDelay.IntValue ) , Timer_RetryPlayers , _ );
+	CreateTimer( float( mapChangeDelay.IntValue ) , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
 }
 
