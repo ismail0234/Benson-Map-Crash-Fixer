@@ -33,7 +33,7 @@ public Action OnLogAction(Handle source, Identity ident,int client,int target, c
 	if( StrContains( message , "changed map to" ) != -1)
 	{
 
-		CreateTimer( 3.0 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+		CreateTimer( 2.9 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
 	}
 
@@ -80,13 +80,12 @@ public Action Command_MapEnd( int client , int args )
 public void Event_MapEnd(Event event, const char[] name, bool dontBroadcast)
 {
 
-	CreateTimer( float( mapChangeDelay.IntValue ) , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( float( mapChangeDelay.IntValue ) - 0.15 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
 }
 
 public Action Timer_RetryPlayers( Handle timer , int _any )
 {
-
 
 	for( int i = 1; i <= MaxClients; i++ )
 	{
@@ -94,7 +93,8 @@ public Action Timer_RetryPlayers( Handle timer , int _any )
 		if( !IsClientInGame( i ) || IsFakeClient( i ) || !IsClientConnected( i ) )
 			continue;
 
-		ReconnectClient( i );
+		ReplyToCommand( i, "BOT Benson Automatic Map Change Success!");
+		ClientCommand( i , "retry" );
 
 	}
 
