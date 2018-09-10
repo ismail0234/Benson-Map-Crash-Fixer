@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.4",
+    version     = "1.0.5",
     url         = "https://www.botbenson.com"
 };
 
@@ -30,7 +30,7 @@ public void OnPluginStart()
 public Action OnLogAction(Handle source, Identity ident,int client,int target, const char[] message)
 {
     
-	if( StrContains( message , "changed map to" ) )
+	if( StrContains( message , "changed map to" ) != -1)
 	{
 
 		CreateTimer( 3.0 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
