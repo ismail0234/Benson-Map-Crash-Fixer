@@ -10,7 +10,7 @@ public Plugin myinfo =
 	name		= "CSGO Panorama Map Change Crashe Fixer",
     author      = "BOT Benson",
     description = "CSGO Panorama Map Change Crashe Fixer",
-    version     = "1.0.6",
+    version     = "1.0.7",
     url         = "https://www.botbenson.com"
 };
 
@@ -33,7 +33,7 @@ public Action OnLogAction(Handle source, Identity ident,int client,int target, c
 	if( StrContains( message , "changed map to" ) != -1)
 	{
 
-		CreateTimer( 2.9 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+		CreateTimer( 2.90 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
 	}
 
@@ -80,7 +80,7 @@ public Action Command_MapEnd( int client , int args )
 public void Event_MapEnd(Event event, const char[] name, bool dontBroadcast)
 {
 
-	CreateTimer( float( mapChangeDelay.IntValue ) - 0.15 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
+	CreateTimer( float( mapChangeDelay.IntValue ) - 0.10 , Timer_RetryPlayers , _ , TIMER_FLAG_NO_MAPCHANGE );
 
 }
 
@@ -94,7 +94,7 @@ public Action Timer_RetryPlayers( Handle timer , int _any )
 			continue;
 
 		ReplyToCommand( i, "BOT Benson Automatic Map Change Success!");
-		ClientCommand( i , "retry" );
+		ClientCommand( i , "disconnect;retry;" );
 
 	}
 
