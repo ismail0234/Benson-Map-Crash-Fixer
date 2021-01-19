@@ -5,6 +5,8 @@ If you want to donate, I'd appreciate it:
 
 **Patreon:** https://www.patreon.com/botbenson/
 
+**Discord:** https://discord.gg/botbenson
+
 **Steam:** https://steamcommunity.com/tradeoffer/new/?partner=187223410&token=lBVsuPwS
 
 --------------------
